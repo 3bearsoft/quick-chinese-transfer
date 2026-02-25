@@ -36,7 +36,7 @@
 <dependency>
     <groupId>com.github.liuyueyi</groupId>
     <artifactId>quick-transfer-core</artifactId>
-    <version>0.2.16</version>
+    <version>0.2.17</version>
 </dependency>
 ```
 
@@ -44,7 +44,7 @@
 
 ```gradle
 // https://mvnrepository.com/artifact/com.github.liuyueyi/quick-transfer-core
-implementation 'com.github.liuyueyi:quick-transfer-core:0.2.16'
+implementation 'com.github.liuyueyi:quick-transfer-core:0.2.17'
 ```
 
 **使用jitpack导入依赖**
@@ -61,7 +61,7 @@ implementation 'com.github.liuyueyi:quick-transfer-core:0.2.16'
 <dependency>
   <groupId>com.github.liuyueyi.quick-chinese-transfer</groupId>
   <artifactId>quick-transfer-core</artifactId>
-  <version>0.2.16</version>
+  <version>0.2.17</version>
 </dependency>
 ```
 
@@ -76,7 +76,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.liuyueyi.quick-chinese-transfer:quick-transfer-core:0.2.16'
+    implementation 'com.github.liuyueyi.quick-chinese-transfer:quick-transfer-core:0.2.17'
 }
 ```
 
@@ -187,6 +187,9 @@ ChineseUtils.loadExcludeDict(Arrays.asList("发展国家", "国"));
 ```
 
 ### 版本说明
+- 0.2.17
+    - [#31「棋圣」和「碁圣」繁体转简体问题处理](https://github.com/liuyueyi/quick-chinese-transfer/issues/31)
+    - [#26 繁体转简体会将“教廷”转换为“梵蒂冈”](https://github.com/liuyueyi/quick-chinese-transfer/issues/26)
 - 0.2.16
     - [#18 新增自定义词库加载，自定义排除词加载](https://github.com/liuyueyi/quick-chinese-transfer/issues/18)
 - 0.2.15
