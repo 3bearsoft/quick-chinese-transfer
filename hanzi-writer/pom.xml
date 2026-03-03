@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>hanzi-writer</artifactId>
+    <name>hanzi-writer</name>
     <description>汉字笔画书写</description>
     <version>0.1.1</version>
 

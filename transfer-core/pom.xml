@@ -10,7 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
     <version>0.2.17</version>
 
+    <name>quick-transfer-core</name>
     <artifactId>quick-transfer-core</artifactId>
+    <description>简繁转换,项目源码：https://github.com/liuyueyi/quick-chinese-transfer</description>
+    <url></url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
