@@ -1,0 +1,57 @@
+# Maven Central Publish Workflow
+# 触发条件：创建 Release 时自动发布
+# 使用说明：需要在 GitHub Secrets 中配置以下变量：
+# - MAVEN_USERNAME: Sonatype 用户名
+# - MAVEN_PASSWORD: Sonatype Token
+# - GPG_PRIVATE_KEY: GPG 私钥（ASCII armored 格式）
+# - GPG_PASSPHRASE: GPG 密钥 passphrase
+
+name: Publish to Maven Central
+
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - test
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      
+      - name: Create settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << 'SETTINGS_EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <servers>
+              <server>
+                <id>ossrh</id>
+                <username>${{ secrets.MAVEN_USERNAME }}</username>
+                <password>${{ secrets.MAVEN_PASSWORD }}</password>
+              </server>
+            </servers>
+          </settings>
+          SETTINGS_EOF
+      
+      - name: Build, Sign and Deploy to Maven Central
+        run: mvn clean deploy -P release -B -DskipTests
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
