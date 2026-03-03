@@ -12,8 +12,8 @@
 
     <name>quick-transfer-core</name>
     <artifactId>quick-transfer-core</artifactId>
-    <description>简繁转换,项目源码：https://github.com/liuyueyi/quick-chinese-transfer</description>
-    <url></url>
+    <description>简繁转换</description>
+    <url>https://github.com/liuyueyi/quick-chinese-transfer</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
