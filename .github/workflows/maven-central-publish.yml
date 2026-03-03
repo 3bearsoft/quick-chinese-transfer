@@ -1,0 +1,80 @@
+# Maven Central Publish Workflow
+# 触发条件：创建 Release 时自动发布，或推送到 transfer/hanzi 分支
+# 使用说明：需要在 GitHub Secrets 中配置以下变量：
+# - MAVEN_USERNAME: Sonatype Central Portal 生成的 Token Username（不是账号！）
+# - MAVEN_PASSWORD: Sonatype Central Portal 生成的 Token Password
+# - GPG_PRIVATE_KEY: GPG 私钥（ASCII armored 格式）
+# - GPG_PASSPHRASE: GPG 密钥 passphrase
+#
+# 分支说明：
+# - transfer 分支：只发布 transfer-core 模块
+# - hanzi 分支：只发布 hanzi-writer 模块
+# - release 分支：表示发布所有模块
+
+name: Publish to Maven Central
+
+on:
+  push:
+    branches:
+      - transfer
+      - hanzi
+      - release
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      
+      - name: Import GPG Key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      
+      - name: Create settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << 'SETTINGS_EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+            <servers>
+              <server>
+                <id>central</id>
+                <username>${{ secrets.MAVEN_USERNAME }}</username>
+                <password>${{ secrets.MAVEN_PASSWORD }}</password>
+              </server>
+            </servers>
+          </settings>
+          SETTINGS_EOF
+      
+      - name: Build, Sign and Deploy to Maven Central
+        run: |
+          # 根据分支判断发布哪个模块
+          if [ "${{ github.ref }}" == "refs/heads/transfer" ]; then
+            echo "Publishing transfer-core module..."
+            cd transfer-core && mvn clean deploy -P release -B -DskipTests
+          elif [ "${{ github.ref }}" == "refs/heads/hanzi" ]; then
+            echo "Publishing hanzi-writer module..."
+            cd hanzi-writer && mvn clean deploy -P release -B -DskipTests
+          elif [ "${{ github.ref }}" == "refs/heads/release" ]; then
+            echo "Publishing all modules..."
+            mvn clean deploy -P release -B -DskipTests
+          else
+            echo "Skipping publish..."
+          fi
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

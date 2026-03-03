@@ -253,7 +253,7 @@ ChineseUtils.loadExcludeDict(Arrays.asList("发展国家", "国"));
 <dependency>
     <groupId>com.github.liuyueyi</groupId>
     <artifactId>hanzi-writer</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -261,7 +261,7 @@ ChineseUtils.loadExcludeDict(Arrays.asList("发展国家", "国"));
 
 ```gradle
 // https://mvnrepository.com/artifact/com.github.liuyueyi/quick-transfer-core
-implementation 'com.github.liuyueyi:hanzi-writer:0.1.0'
+implementation 'com.github.liuyueyi:hanzi-writer:0.1.1'
 ```
 
 **使用jitpack导入依赖**
@@ -278,7 +278,7 @@ implementation 'com.github.liuyueyi:hanzi-writer:0.1.0'
 <dependency>
 <groupId>com.github.liuyueyi.quick-chinese-transfer</groupId>
 <artifactId>hanzi-writer</artifactId>
-<version>0.2.14</version>
+<version>0.2.17</version>
 </dependency>
 ```
 
@@ -293,7 +293,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.liuyueyi.quick-chinese-transfer:hanzi-writer:0.2.14'
+    implementation 'com.github.liuyueyi.quick-chinese-transfer:hanzi-writer:0.2.17'
 }
 ```
 
@@ -347,5 +347,18 @@ List<String> strokeSvgList = vo.getStrokes();
 
 ### 版本说明
 
+- 0.1.1
+  - 新增GitHub Action，实现自动上传jar包到中央仓库
 - 0.1.0
-    - 完成初始版本
+  - 完成初始版本
+
+## 中央仓库上传说明
+
+新版中央仓管理地址： [central.sonatype.com](https://central.sonatype.com/)
+
+基于GitHub Action实现自动上传jar包到中央仓库，由于不同模块版本号不一致，因此这里采用分支的触发方式
+
+1. hanzi: 分支上有变更，表示推送 hanzi-writer 模块到中央仓库
+2. transfer: 分支上有变更，表示推送 transfer-core 模块到中央仓库
+3. release: 分支上有变更，表示整个项目推送到中央仓库
+
