@@ -1,8 +1,8 @@
 # Maven Central Publish Workflow
-# 触发条件：创建 Release 时自动发布
+# 触发条件：创建 Release 时自动发布，或推送到 test 分支
 # 使用说明：需要在 GitHub Secrets 中配置以下变量：
-# - MAVEN_USERNAME: Sonatype 用户名
-# - MAVEN_PASSWORD: Sonatype Token
+# - MAVEN_USERNAME: Sonatype 用户名（OSSRH 账号）
+# - MAVEN_PASSWORD: Sonatype Token（在 OSSRH 生成）
 # - GPG_PRIVATE_KEY: GPG 私钥（ASCII armored 格式）
 # - GPG_PASSPHRASE: GPG 密钥 passphrase
 

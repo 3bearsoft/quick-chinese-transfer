@@ -42,7 +42,7 @@
         <developer>
             <name>YiHui</name>
             <email>bangzewu@126.com</email>
-            <url>http://blog.hhui.top</url>
+            <url>https://hhui.top</url>
         </developer>
     </developers>
 
@@ -162,11 +162,11 @@
     <distributionManagement>
         <repository>
             <id>ossrh</id>
-            <url>https://central.sonatype.com/api/v1/organization/namespace/com_github_liuyueyi/maven_group</url>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://central.sonatype.com/api/v1/organization/namespace/com_github_liuyueyi/maven_group</url>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -188,6 +188,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.13</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
