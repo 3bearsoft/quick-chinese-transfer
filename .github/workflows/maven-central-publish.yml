@@ -1,10 +1,15 @@
 # Maven Central Publish Workflow
-# 触发条件：创建 Release 时自动发布，或推送到 test 分支
+# 触发条件：创建 Release 时自动发布，或推送到 transfer/hanzi 分支
 # 使用说明：需要在 GitHub Secrets 中配置以下变量：
 # - MAVEN_USERNAME: Sonatype Central Portal 生成的 Token Username（不是账号！）
 # - MAVEN_PASSWORD: Sonatype Central Portal 生成的 Token Password
 # - GPG_PRIVATE_KEY: GPG 私钥（ASCII armored 格式）
 # - GPG_PASSPHRASE: GPG 密钥 passphrase
+#
+# 分支说明：
+# - transfer 分支：只发布 transfer-core 模块
+# - hanzi 分支：只发布 hanzi-writer 模块
+# - release 分支：表示发布所有模块
 
 name: Publish to Maven Central
 
@@ -13,7 +18,8 @@ on:
     types: [created]
   push:
     branches:
-      - test
+      - transfer
+      - hanzi
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -57,6 +63,14 @@ jobs:
           SETTINGS_EOF
       
       - name: Build, Sign and Deploy to Maven Central
-        run: mvn clean deploy -P release -B -DskipTests
+        run: |
+          # 根据分支判断发布哪个模块
+          if [ "${{ github.ref }}" == "refs/heads/transfer" ]; then
+            echo "Publishing transfer-core module..."
+            cd transfer-core && mvn clean deploy -P release -B -DskipTests
+          elif [ "${{ github.ref }}" == "refs/heads/hanzi" ]; then
+            echo "Publishing hanzi-writer module..."
+            cd hanzi-writer && mvn clean deploy -P release -B -DskipTests
+          fi
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
