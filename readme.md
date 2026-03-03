@@ -349,3 +349,13 @@ List<String> strokeSvgList = vo.getStrokes();
 
 - 0.1.0
     - 完成初始版本
+
+
+## 中央仓库上传说明
+
+基于GitHub Action实现自动上传jar包到中央仓库，由于不同模块版本号不一致，因此这里采用分支的触发方式
+
+1. hanzi: 分支上有变更，表示推送 hanzi-writer 模块到中央仓库
+2. transfer: 分支上有变更，表示推送 transfer-core 模块到中央仓库
+3. release: 分支上有变更，表示整个项目推送到中央仓库
+
