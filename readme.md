@@ -1,5 +1,14 @@
 # quick-chinese-transfer
 
+**修改点**  
+- 将t2s.txt文件中繁简词字数不一致的词组移除，例如：主審=裁判员。
+
+编译参考[[AGENTS.md]]
+
+以下是原始信息  
+
+---  
+
 [![Builder](https://travis-ci.org/liuyueyi/quick-chinese-transfer.svg?branch=master)](https://travis-ci.org/liuyueyi/quick-chinese-transfer)
 [![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/com.github.liuyueyi/quick-transfer-core.svg)](https://search.maven.org/search?q=a:quick-transfer-core)
 [![JitPack](https://jitpack.io/v/liuyueyi/quick-chinese-transfer.svg)](https://jitpack.io/#liuyueyi/quick-chinese-transfer)
