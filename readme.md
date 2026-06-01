@@ -2,8 +2,9 @@
 
 **修改点**  
 - 将t2s.txt文件中繁简词字数不一致的词组移除，例如：主審=裁判员。
+- 将t2s.txt文件中包含非2字节unicode码的词移除，异常参考：[异常](https://console.firebase.google.com/u/1/project/filesearch-846ab/crashlytics/app/android:com.bearsoft3.filesearch/issues/5bdc0aecc3df560d21bfc49962fe29e3?hl=zh-cn&time=7d&sessionEventKey=6A1865610082000154B968BB050C2CE9_2223420210194894834)
 
-编译参考[[AGENTS.md]]
+编译参考[[AGENTS.md]]，结果在transfer-core/target/quick-transfer-core-0.2.17.jar
 
 以下是原始信息  
 
